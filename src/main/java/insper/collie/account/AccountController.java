@@ -2,6 +2,7 @@ package insper.collie.account;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +25,19 @@ public interface AccountController {
 
     @PutMapping("/accounts/{id}")
     public ResponseEntity<AccountOut> update(
+        @RequestHeader(required = true, name = "id-user") String idUser,
         @PathVariable(required = true) String id,
         @RequestBody(required = true) AccountIn in
+    );
+
+    @GetMapping("/accounts/{idUser}")
+    public ResponseEntity<AccountOut> getAccount(
+        @PathVariable(required = true) String idUser
+    );
+
+    @GetMapping("/accounts/exists/{id}")
+    public ResponseEntity<Boolean> isAccount(
+        @PathVariable(required = true) String id
     );
 
     @GetMapping("/accounts")
