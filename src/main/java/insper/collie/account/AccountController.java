@@ -17,16 +17,21 @@ public interface AccountController {
     public ResponseEntity<AccountOut> create(
         @RequestBody(required = true) AccountIn in
     );
+    
+    @GetMapping("/accounts")
+    public ResponseEntity<AccountInfo> getUserAccount(
+        @RequestHeader(required = true, name = "id-user") String idUser,
+        @RequestHeader(required = true, name = "role-user") String roleUser
+    );
 
     @PostMapping("/accounts/login")
     public ResponseEntity<AccountOut> login(
         @RequestBody(required = true) LoginIn in
     );
 
-    @PutMapping("/accounts/{id}")
+    @PutMapping("/accounts")
     public ResponseEntity<AccountOut> update(
         @RequestHeader(required = true, name = "id-user") String idUser,
-        @PathVariable(required = true) String id,
         @RequestBody(required = true) AccountIn in
     );
 
@@ -40,10 +45,5 @@ public interface AccountController {
         @PathVariable(required = true) String id
     );
 
-    @GetMapping("/accounts")
-    public ResponseEntity<AccountOut> read(
-        @RequestHeader(required = true, name = "id-user") String idUser,
-        @RequestHeader(required = true, name = "role-user") String roleUser
-    );
     
 }
